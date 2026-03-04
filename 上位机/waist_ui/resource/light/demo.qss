@@ -1,0 +1,192 @@
+/*
+    医疗主题 QSS 样式文件
+    用于康复医疗仪表盘的浅色主题
+*/
+
+/* ==================== 主窗口样式 ==================== */
+FluentWindow {
+    background-color: #21cbb2;
+}
+
+FluentWindow > QWidget {
+    background-color: #21cbb2;
+}
+
+MainWindow {
+    background-color: #21cbb2;
+}
+
+/* 导航栏背景 */
+NavigationInterface {
+    background-color: #21cbb2;
+    border: none;
+}
+
+/* 标题栏背景 */
+MSFluentTitleBar {
+    background-color: #FFFFFF;
+    border: none;
+}
+
+/* 滚动区域边框 */
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+/* ==================== 卡片样式 ==================== */
+ElevatedCardWidget,
+CardWidget,
+SimpleCardWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #B2DFDB;
+    border-radius: 8px;
+}
+
+/* ==================== 标签样式 ==================== */
+TitleLabel,
+SubtitleLabel,
+StrongBodyLabel {
+    color: #000000;
+}
+
+BodyLabel,
+CaptionLabel {
+    color: #333333;
+}
+
+/* ==================== 按钮样式 ==================== */
+PrimaryPushButton {
+    background-color: #00A896;
+    border: 1px solid #00A896;
+    border-radius: 4px;
+    color: #FFFFFF;
+}
+
+PrimaryPushButton:hover {
+    background-color: #008F82;
+    border: 1px solid #008F82;
+}
+
+PrimaryPushButton:pressed {
+    background-color: #007A70;
+    border: 1px solid #007A70;
+}
+
+/* 重试按钮特殊样式 */
+#retry_btn {
+    background-color: #C42B1C;
+    border: 1px solid #C42B1C;
+    color: #FFFFFF;
+}
+
+#retry_btn:hover {
+    background-color: #A82215;
+    border: 1px solid #A82215;
+}
+
+#retry_btn:pressed {
+    background-color: #8E1A12;
+    border: 1px solid #8E1A12;
+}
+
+PushButton {
+    background-color: #FFFFFF;
+    border: 1px solid #B2DFDB;
+    border-radius: 4px;
+    color: #000000;
+}
+
+PushButton:hover {
+    background-color: #F0F8F7;
+    border: 1px solid #00A896;
+}
+
+PushButton:pressed {
+    background-color: #E0F5F2;
+    border: 1px solid #00A896;
+}
+
+/* ==================== 滑动条样式 ==================== */
+/* 注释掉Slider样式，测试是否影响鼠标事件 */
+/*
+Slider::groove:horizontal {
+    height: 4px;
+    background: #E0E0E0;
+    border-radius: 2px;
+}
+
+Slider::handle:horizontal {
+    width: 16px;
+    height: 16px;
+    background: #00A896;
+    border-radius: 8px;
+    margin: -6px 0;
+}
+
+Slider::handle:horizontal:hover {
+    background: #008F82;
+}
+*/
+
+/* ==================== 进度条样式 ==================== */
+ProgressBar {
+    background-color: #E0E0E0;
+    border-radius: 3px;
+    height: 6px;
+}
+
+ProgressBar::chunk {
+    background-color: #00A896;
+    border-radius: 3px;
+}
+
+/* ==================== 状态徽章样式 ==================== */
+InfoBadge {
+    border-radius: 4px;
+    font-size: 11px;
+    padding: 2px 8px;
+}
+
+/* ==================== 数字输入框样式 ==================== */
+DoubleSpinBox,
+SpinBox {
+    background-color: #FFFFFF;
+    border: 1px solid #B2DFDB;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+DoubleSpinBox:hover,
+SpinBox:hover {
+    border: 1px solid #00A896;
+}
+
+DoubleSpinBox:focus,
+SpinBox:focus {
+    border: 1px solid #00A896;
+    background-color: #F0F8F7;
+}
+
+/* ==================== 状态卡片样式 ==================== */
+StatusCard {
+    background-color: #FFFFFF;
+    border: 1px solid #B2DFDB;
+    border-radius: 8px;
+}
+
+StatusCard TitleLabel {
+    color: #00A896;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ==================== 占位界面样式 ==================== */
+PlaceholderInterface {
+    background-color: #E8F5F3;
+}
+
+/* ==================== 主视图背景 ==================== */
+#dataMonitorView {
+    background-color: #d0fff6;
+}
