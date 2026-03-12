@@ -1,7 +1,7 @@
 # coding: utf-8
 """
 通信日志界面
-包含：日志显示 + 命令输入
+包含：连接控制 + 日志显示 + 命令输入
 """
 
 from PySide6.QtCore import Qt
@@ -15,7 +15,7 @@ from qfluentwidgets import (
 
 
 class LogInterface(ScrollArea):
-    """通信日志界面 - 日志显示 + 命令输入"""
+    """通信日志界面 - 连接控制 + 日志显示 + 命令输入"""
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -36,11 +36,57 @@ class LogInterface(ScrollArea):
         self.vBoxLayout.setSpacing(20)
 
     def __initLayout(self):
+        connection_card = self.__createConnectionCard()
         log_card = self.__createLogCard()
         command_card = self.__createCommandCard()
 
+        self.vBoxLayout.addWidget(connection_card, 0)
         self.vBoxLayout.addWidget(log_card, 1)
         self.vBoxLayout.addWidget(command_card, 0)
+
+    def __createConnectionCard(self):
+        """连接控制卡片"""
+        card = CardWidget()
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(15)
+
+        title = SubtitleLabel('连接控制')
+        layout.addWidget(title)
+
+        input_layout = QHBoxLayout()
+        input_layout.setSpacing(10)
+
+        ip_label = BodyLabel('IP:')
+        self.ipInput = LineEdit()
+        self.ipInput.setPlaceholderText('192.168.4.1')
+        self.ipInput.setText('192.168.4.1')
+        self.ipInput.setFixedWidth(150)
+
+        port_label = BodyLabel('端口:')
+        self.portInput = LineEdit()
+        self.portInput.setPlaceholderText('8080')
+        self.portInput.setText('8080')
+        self.portInput.setFixedWidth(80)
+
+        self.connectBtn = PrimaryPushButton('连接')
+        self.connectBtn.setFixedWidth(80)
+        self.connectBtn.clicked.connect(self.__onConnectClicked)
+
+        input_layout.addWidget(ip_label)
+        input_layout.addWidget(self.ipInput)
+        input_layout.addWidget(port_label)
+        input_layout.addWidget(self.portInput)
+        input_layout.addWidget(self.connectBtn)
+        input_layout.addStretch()
+
+        layout.addLayout(input_layout)
+
+        self.statusLabel = CaptionLabel('未连接')
+        self.statusLabel.setTextColor(QColor(128, 128, 128))
+        layout.addWidget(self.statusLabel)
+
+        return card
 
     def __createLogCard(self):
         """日志显示卡片"""
@@ -94,11 +140,37 @@ class LogInterface(ScrollArea):
 
         layout.addLayout(input_layout)
 
-        help_label = CaptionLabel('提示: WIFI=SSID,密码 配置WiFi | STATUS 查看状态 | RESET 重启 | HELP 帮助')
+        help_label = CaptionLabel('提示: 电机控制命令格式请参考通信协议')
         help_label.setTextColor(QColor(128, 128, 128))
         layout.addWidget(help_label)
 
         return card
+
+    def __onConnectClicked(self):
+        """连接按钮点击"""
+        if hasattr(self, '_on_connect_clicked'):
+            ip = self.ipInput.text().strip()
+            port = int(self.portInput.text().strip())
+            self._on_connect_clicked(ip, port)
+
+    def setConnectionState(self, connected):
+        """设置连接状态"""
+        if connected:
+            self.statusLabel.setText('已连接')
+            self.statusLabel.setTextColor(QColor(39, 174, 96))
+            self.connectBtn.setText('断开')
+            self.ipInput.setEnabled(False)
+            self.portInput.setEnabled(False)
+        else:
+            self.statusLabel.setText('未连接')
+            self.statusLabel.setTextColor(QColor(128, 128, 128))
+            self.connectBtn.setText('连接')
+            self.ipInput.setEnabled(True)
+            self.portInput.setEnabled(True)
+
+    def setConnectCallback(self, callback):
+        """设置连接按钮回调"""
+        self._on_connect_clicked = callback
 
     def addLog(self, level, message):
         """添加日志"""
@@ -118,7 +190,7 @@ class LogInterface(ScrollArea):
             format.setForeground(QColor('#000000'))
 
         cursor = self.logTextEdit.textCursor()
-        cursor.movePosition(cursor.End)
+        cursor.movePosition(cursor.MoveOperation.End)
 
         cursor.insertText(f"[{time_str}] ", QTextCharFormat())
         cursor.insertText(f"[{level}] ", format)

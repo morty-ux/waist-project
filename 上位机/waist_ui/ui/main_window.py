@@ -5,7 +5,6 @@
 """
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor
 from qfluentwidgets import FluentWindow, NavigationItemPosition, FluentIcon, InfoBar, InfoBarPosition
 
 from ui.data_monitor import DataMonitorInterface
@@ -20,7 +19,7 @@ class MainWindow(FluentWindow):
 
     def __init__(self):
         super().__init__()
-        self.comm_manager = None
+        self.tcp_client = None
         self.__initWindow()
         self.__initNavigation()
         self.__initCommunication()
@@ -65,44 +64,59 @@ class MainWindow(FluentWindow):
         )
 
     def __initCommunication(self):
-        from communication import CommunicationManager
+        from communication import TCPClient
 
-        self.comm_manager = CommunicationManager(host='0.0.0.0', port=8080)
+        self.tcp_client = TCPClient(ip="192.168.4.1", port=8080)
 
-        self.comm_manager.connection_changed.connect(self.__onConnectionChanged)
-        self.comm_manager.sensor_data_received.connect(self.__onSensorDataReceived)
-        self.comm_manager.log_message.connect(self.__onLogMessage)
-        self.comm_manager.error_occurred.connect(self.__onError)
+        self.tcp_client.connected.connect(self.__onConnected)
+        self.tcp_client.disconnected.connect(self.__onDisconnected)
+        self.tcp_client.raw_data_received.connect(self.__onRawDataReceived)
+        self.tcp_client.rx_data_changed.connect(self.__onRxDataChanged)
+        self.tcp_client.error_occurred.connect(self.__onError)
+        self.tcp_client.log_message.connect(self.__onLogMessage)
 
         self.dataMonitorInterface.setForceChangedCallback(self.__onForceChanged)
-        self.dataMonitorInterface.setIdentifyCallback(self.__onIdentify)
         self.dataMonitorInterface.setResetCallback(self.__onReset)
 
+        self.logInterface.setConnectCallback(self.__onConnectClicked)
         self.logInterface.setSendCommandCallback(self.__onSendCommand)
 
-        self.comm_manager.start()
+        self.logInterface.addLog('INFO', '请在通信日志界面输入IP地址和端口，点击连接')
 
-    def __onConnectionChanged(self, connected):
-        if connected:
-            info = self.comm_manager.get_connection_info()
-            self.dataMonitorInterface.setConnectionStatus(True, f"{info['ip']}:{info['port']}")
-            self.logInterface.addLog('INFO', f"已连接到设备: {info['ip']}:{info['port']}")
+    def __onConnectClicked(self, ip, port):
+        """连接按钮点击"""
+        self.tcp_client.set_server(ip, port)
+        self.tcp_client.connect_to_server()
 
-            InfoBar.success(
-                title='连接成功',
-                content='已连接到ESP8266设备',
-                orient=Qt.Horizontal,
-                isClosable=True,
-                position=InfoBarPosition.TOP,
-                duration=3000,
-                parent=self
-            )
-        else:
-            self.dataMonitorInterface.setConnectionStatus(False)
-            self.logInterface.addLog('WARNING', '设备已断开连接')
+    def __onConnected(self):
+        self.dataMonitorInterface.setConnectionStatus(True, f"{self.tcp_client.tcp_server_ip}:{self.tcp_client.tcp_server_port}")
+        self.logInterface.setConnectionState(True)
+        self.logInterface.addLog('INFO', f"已连接到 {self.tcp_client.tcp_server_ip}:{self.tcp_client.tcp_server_port}")
 
-    def __onSensorDataReceived(self, sensor_data):
-        self.dataMonitorInterface.updateMotorData(sensor_data)
+        local_ip = self.tcp_client.get_local_ip()
+        self.logInterface.addLog('INFO', f"本地IP: {local_ip}")
+
+        InfoBar.success(
+            title='连接成功',
+            content=f"已连接到 {self.tcp_client.tcp_server_ip}",
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=3000,
+            parent=self
+        )
+
+    def __onDisconnected(self):
+        self.dataMonitorInterface.setConnectionStatus(False)
+        self.logInterface.setConnectionState(False)
+        self.logInterface.addLog('WARNING', '连接已断开')
+
+    def __onRawDataReceived(self, data):
+        hex_str = ' '.join(f'{b:02X}' for b in data)
+        self.logInterface.addLog('DEBUG', f"[RX] {hex_str}")
+
+    def __onRxDataChanged(self, data):
+        self.logInterface.addLog('DEBUG', f"[RX] {data}")
 
     def __onLogMessage(self, level, message):
         self.logInterface.addLog(level, message)
@@ -120,16 +134,15 @@ class MainWindow(FluentWindow):
             parent=self
         )
 
-    def __onForceChanged(self, channel, value):
-        self.comm_manager.set_force(channel, value)
-
-    def __onIdentify(self):
-        self.comm_manager.identify_parameters()
-        self.logInterface.addLog('INFO', '发送参数辨识命令')
+    def __onForceChanged(self, rb, rf, lb, lf):
+        self.tcp_client.send_motor_cmd(rb, rf, lb, lf)
 
     def __onReset(self):
-        self.comm_manager.reset_system()
-        self.logInterface.addLog('INFO', '发送系统复位命令')
+        self.dataMonitorInterface.reset_values()
+        self.logInterface.addLog('INFO', '系统已复位')
+
+        self.tcp_client.send_motor_cmd(0, 0, 0, 0)
 
     def __onSendCommand(self, command):
         self.logInterface.addLog('INFO', f"发送命令: {command}")
+        self.tcp_client.send_text(command)
