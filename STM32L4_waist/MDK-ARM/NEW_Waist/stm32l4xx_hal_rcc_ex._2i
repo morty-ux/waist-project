@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/Bsp_Drivers -I ../Algorithm
+-I.\RTE\_NEW_Waist
+-ID:\Keil_v5\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include
+-ID:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include
+-D__UVISION_VERSION="540" -DSTM32L4R5xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32L4R5xx
+-o new_waist\stm32l4xx_hal_rcc_ex.o --omf_browse new_waist\stm32l4xx_hal_rcc_ex.crf --depend new_waist\stm32l4xx_hal_rcc_ex.d --feedback "NEW_Waist\NEW_Waist.fed" "../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c"
