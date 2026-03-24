@@ -6,7 +6,7 @@ new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4r5xx.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Include/core_cm4.h
-new_waist\stm32l4xx_hal_i2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\stm32l4xx_hal_i2c.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Include/cmsis_version.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -14,7 +14,7 @@ new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/system_stm32l4xx.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-new_waist\stm32l4xx_hal_i2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+new_waist\stm32l4xx_hal_i2c.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h
 new_waist\stm32l4xx_hal_i2c.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h

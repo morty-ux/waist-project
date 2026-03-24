@@ -1,8 +1,8 @@
 new_waist\driver_log.o: ..\Drivers\Bsp_Drivers\driver_log.c
 new_waist\driver_log.o: ..\Drivers\Bsp_Drivers\driver_log.h
 new_waist\driver_log.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-new_waist\driver_log.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-new_waist\driver_log.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\driver_log.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
+new_waist\driver_log.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\driver_log.o: ../Core/Inc/FreeRTOSConfig.h
 new_waist\driver_log.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 new_waist\driver_log.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
@@ -51,6 +51,6 @@ new_waist\driver_log.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h
 new_waist\driver_log.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h
 new_waist\driver_log.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h
 new_waist\driver_log.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
-new_waist\driver_log.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-new_waist\driver_log.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-new_waist\driver_log.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+new_waist\driver_log.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\string.h
+new_waist\driver_log.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdarg.h
+new_waist\driver_log.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdio.h

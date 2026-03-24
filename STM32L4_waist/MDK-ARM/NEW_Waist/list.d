@@ -1,8 +1,8 @@
 new_waist\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
-new_waist\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+new_waist\list.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdlib.h
 new_waist\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-new_waist\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-new_waist\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\list.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
+new_waist\list.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\list.o: ../Core/Inc/FreeRTOSConfig.h
 new_waist\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 new_waist\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

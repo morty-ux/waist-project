@@ -7,7 +7,7 @@ new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4r5xx.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Include/core_cm4.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Include/cmsis_version.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -15,7 +15,7 @@ new_waist\driver_irq.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 new_waist\driver_irq.o: ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/system_stm32l4xx.h
 new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h
 new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
 new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h
 new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h
 new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h
@@ -43,7 +43,7 @@ new_waist\driver_irq.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_e
 new_waist\driver_irq.o: ../Core/Inc/usart.h
 new_waist\driver_irq.o: ../Core/Inc/adc.h
 new_waist\driver_irq.o: ..\Drivers\Bsp_Drivers\driver_actuator.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdbool.h
 new_waist\driver_irq.o: ../Core/Inc/tim.h
 new_waist\driver_irq.o: ..\Drivers\Bsp_Drivers\driver_shell.h
 new_waist\driver_irq.o: ..\Drivers\Bsp_Drivers\driver_log.h
@@ -57,9 +57,9 @@ new_waist\driver_irq.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_w
 new_waist\driver_irq.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 new_waist\driver_irq.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 new_waist\driver_irq.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\string.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdarg.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdio.h
 new_waist\driver_irq.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-new_waist\driver_irq.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+new_waist\driver_irq.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdlib.h
 new_waist\driver_irq.o: ..\Drivers\Bsp_Drivers\driver_ESP01s.h

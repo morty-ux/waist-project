@@ -2,8 +2,8 @@ new_waist\driver_shell.o: ..\Drivers\Bsp_Drivers\driver_shell.c
 new_waist\driver_shell.o: ..\Drivers\Bsp_Drivers\driver_shell.h
 new_waist\driver_shell.o: ..\Drivers\Bsp_Drivers\driver_log.h
 new_waist\driver_shell.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\driver_shell.o: ../Core/Inc/FreeRTOSConfig.h
 new_waist\driver_shell.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 new_waist\driver_shell.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
@@ -52,11 +52,11 @@ new_waist\driver_shell.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.
 new_waist\driver_shell.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h
 new_waist\driver_shell.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h
 new_waist\driver_shell.o: ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\string.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdarg.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdio.h
 new_waist\driver_shell.o: ..\Drivers\Bsp_Drivers\driver_actuator.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdbool.h
 new_waist\driver_shell.o: ../Core/Inc/tim.h
 new_waist\driver_shell.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-new_waist\driver_shell.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+new_waist\driver_shell.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdlib.h

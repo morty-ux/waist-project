@@ -10,7 +10,9 @@
 
 extern ActuatorDevice ActuatorRF;
 extern ActuatorDevice ActuatorRB;
-extern volatile uint16_t AdcRec[2];
+extern ActuatorDevice ActuatorLF;
+extern ActuatorDevice ActuatorLB;
+extern volatile uint16_t AdcRec[6];
 
 extern UART_HandleTypeDef hlpuart1;
 extern uint8_t shell_buff[64];
@@ -24,8 +26,10 @@ extern ESP8266_Device esp8266;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
     if (hadc == &hadc1) {
-			Actuator_UpdateFeedback(&ActuatorRF,AdcRec[0]);
-			Actuator_UpdateFeedback(&ActuatorRB,AdcRec[1]);
+        Actuator_UpdateFeedback(&ActuatorRF, AdcRec[2]);
+        Actuator_UpdateFeedback(&ActuatorRB, AdcRec[3]);
+        Actuator_UpdateFeedback(&ActuatorLB, AdcRec[4]);
+        Actuator_UpdateFeedback(&ActuatorLF, AdcRec[5]);
     }
 }
 

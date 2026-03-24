@@ -1,9 +1,9 @@
 new_waist\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-new_waist\tasks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-new_waist\tasks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+new_waist\tasks.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdlib.h
+new_waist\tasks.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\string.h
 new_waist\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-new_waist\tasks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-new_waist\tasks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\tasks.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
+new_waist\tasks.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\tasks.o: ../Core/Inc/FreeRTOSConfig.h
 new_waist\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 new_waist\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

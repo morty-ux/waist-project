@@ -3,31 +3,167 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ¦ÌVision V5.40.0.0
-Copyright (C) 2024 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 11 çŽ‹é¸¿é£ž, 11, LIC=NQQMA-1JMBY-TGX7T-RXWCQ-BJKCJ-H366T
+IDE-Version: ¦ÌVision V5.42.0.0
+Copyright (C) 2025 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: RRICKK Rick, RRRIICK, LIC=D0D7S-LNEP8-636MB-28P0M-LE2BJ-T1H66
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.40.0.3
-Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 6 (build 750)
-Assembler:       Armasm.exe V5.06 update 6 (build 750)
-Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
-Library Manager: ArmAr.exe V5.06 update 6 (build 750)
-Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
-CPU DLL:         SARMCM3.DLL V5.40.0.3
+Toolchain:       MDK-ARM Plus  Version: 5.42.0.0
+Toolchain Path:  E:\Keil_v5\ARM\ARM5\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.42.0.0
 Dialog DLL:      DCM.DLL V1.17.5.0
 Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.3.0.0
-Dialog DLL:      TCM.DLL V1.56.4.0
+Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
-D:\CodeDoc\cppProject\NEW_Waist\MDK-ARM\NEW_Waist.uvprojx
-Project File Date:  02/23/2026
+E:\waist_project\STM32L4_waist\MDK-ARM\NEW_Waist.uvprojx
+Project File Date:  03/24/2026
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
-Build target 'NEW_Waist'
-"NEW_Waist\NEW_Waist.axf" - 0 Error(s), 0 Warning(s).
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'E:\Keil_v5\ARM\ARM5\Bin'
+Rebuild target 'NEW_Waist'
+assembling startup_stm32l4r5xx.s...
+compiling tim.c...
+compiling stm32l4xx_hal_timebase_tim.c...
+compiling dma.c...
+compiling usart.c...
+compiling stm32l4xx_hal_adc_ex.c...
+compiling main.c...
+../Drivers/Bsp_Drivers/driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+../Drivers/Bsp_Drivers/driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Drivers/Bsp_Drivers/driver_shell.h(31): warning:  #1295-D: Deprecated declaration Shell_Exec - give arg types
+  void Shell_Exec();
+../Core/Src/main.c: 3 warnings, 0 errors
+compiling freertos.c...
+../Drivers/Bsp_Drivers/driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Drivers/Bsp_Drivers/driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+../Drivers/Bsp_Drivers/driver_shell.h(31): warning:  #1295-D: Deprecated declaration Shell_Exec - give arg types
+  void Shell_Exec();
+../Drivers/Bsp_Drivers/driver_frame.h(90): warning:  #1-D: last line of file ends without a newline
+  #endif // __DRIVER_FRAME_H__
+../Drivers/Bsp_Drivers/driver_ESP01s.h(71): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/freertos.c(80): warning:  #9-D: nested comment is not allowed
+  /* Private function prototypes -----------------------------------------------*/
+../Core/Src/freertos.c(253): warning:  #1-D: last line of file ends without a newline
+  /* USER CODE END Application */
+../Core/Src/freertos.c: 7 warnings, 0 errors
+compiling stm32l4xx_hal_rcc.c...
+compiling stm32l4xx_hal.c...
+compiling gpio.c...
+compiling adc.c...
+compiling stm32l4xx_hal_msp.c...
+compiling usb_otg.c...
+compiling stm32l4xx_it.c...
+../Drivers/Bsp_Drivers/driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+../Drivers/Bsp_Drivers/driver_ESP01s.h(71): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/stm32l4xx_it.c: 2 warnings, 0 errors
+compiling stm32l4xx_hal_adc.c...
+compiling stm32l4xx_hal_cortex.c...
+compiling stm32l4xx_hal_flash_ex.c...
+compiling stm32l4xx_hal_dma.c...
+compiling stm32l4xx_hal_flash.c...
+compiling stm32l4xx_hal_i2c_ex.c...
+compiling stm32l4xx_hal_uart_ex.c...
+compiling stm32l4xx_hal_flash_ramfunc.c...
+compiling stm32l4xx_hal_i2c.c...
+compiling stm32l4xx_hal_gpio.c...
+compiling croutine.c...
+compiling stm32l4xx_hal_dma_ex.c...
+compiling stm32l4xx_hal_pwr.c...
+compiling stm32l4xx_hal_pwr_ex.c...
+compiling list.c...
+compiling event_groups.c...
+compiling stream_buffer.c...
+compiling queue.c...
+compiling heap_4.c...
+compiling timers.c...
+compiling tasks.c...
+compiling stm32l4xx_hal_exti.c...
+compiling port.c...
+compiling stm32l4xx_hal_uart.c...
+compiling Alg_pid.c...
+compiling stm32l4xx_hal_rcc_ex.c...
+compiling system_stm32l4xx.c...
+compiling stm32l4xx_hal_pcd_ex.c...
+compiling stm32l4xx_hal_pcd.c...
+compiling driver_actuator.c...
+..\Drivers\Bsp_Drivers\driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_actuator.c(94): warning:  #1-D: last line of file ends without a newline
+  }
+..\Drivers\Bsp_Drivers\driver_actuator.c: 2 warnings, 0 errors
+compiling stm32l4xx_ll_usb.c...
+compiling driver_shell.c...
+..\Drivers\Bsp_Drivers\driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+..\Drivers\Bsp_Drivers\driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_shell.h(31): warning:  #1295-D: Deprecated declaration Shell_Exec - give arg types
+  void Shell_Exec();
+..\Drivers\Bsp_Drivers\driver_shell.c(138): warning:  #223-D: function "isspace" declared implicitly
+          if (args_copy[i] == '\r' || args_copy[i] == '\n' || isspace((unsigned char)args_copy[i])) {
+..\Drivers\Bsp_Drivers\driver_shell.c(149): warning:  #223-D: function "isspace" declared implicitly
+          while (*p && isspace((unsigned char)*p)) p++;
+..\Drivers\Bsp_Drivers\driver_shell.c(155): warning:  #223-D: function "isspace" declared implicitly
+          while (*p && !isspace((unsigned char)*p)) p++;
+..\Drivers\Bsp_Drivers\driver_shell.c: 6 warnings, 0 errors
+compiling stm32l4xx_hal_tim_ex.c...
+compiling driver_log.c...
+..\Drivers\Bsp_Drivers\driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+..\Drivers\Bsp_Drivers\driver_log.c(155): warning:  #1-D: last line of file ends without a newline
+  }
+..\Drivers\Bsp_Drivers\driver_log.c: 2 warnings, 0 errors
+compiling driver_irq.c...
+..\Drivers\Bsp_Drivers\driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+..\Drivers\Bsp_Drivers\driver_shell.h(31): warning:  #1295-D: Deprecated declaration Shell_Exec - give arg types
+  void Shell_Exec();
+..\Drivers\Bsp_Drivers\driver_ESP01s.h(71): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_irq.c(56): warning:  #1-D: last line of file ends without a newline
+  }
+..\Drivers\Bsp_Drivers\driver_irq.c: 5 warnings, 0 errors
+compiling driver_frame.c...
+..\Drivers\Bsp_Drivers\driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+..\Drivers\Bsp_Drivers\driver_frame.h(90): warning:  #1-D: last line of file ends without a newline
+  #endif // __DRIVER_FRAME_H__
+..\Drivers\Bsp_Drivers\driver_frame.c(225): warning:  #1-D: last line of file ends without a newline
+  }
+..\Drivers\Bsp_Drivers\driver_frame.c: 4 warnings, 0 errors
+compiling driver_ESP01s.c...
+..\Drivers\Bsp_Drivers\driver_log.h(148): warning:  #1-D: last line of file ends without a newline
+  #endif /* __PRINT_H */
+..\Drivers\Bsp_Drivers\driver_ESP01s.h(71): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_actuator.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Drivers\Bsp_Drivers\driver_frame.h(90): warning:  #1-D: last line of file ends without a newline
+  #endif // __DRIVER_FRAME_H__
+..\Drivers\Bsp_Drivers\driver_ESP01s.c: 4 warnings, 0 errors
+compiling cmsis_os2.c...
+compiling stm32l4xx_hal_tim.c...
+linking...
+Program Size: Code=37736 RO-data=1084 RW-data=272 ZI-data=58488  
+FromELF: creating hex file...
+"NEW_Waist\NEW_Waist.axf" - 0 Error(s), 35 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -38,20 +174,19 @@ Package Vendor: ARM
    * Component: CORE Version: 6.1.0
 
 Package Vendor: Keil
-                https://www.keil.com/pack/Keil.STM32L4xx_DFP.2.7.0.pack
-                Keil::STM32L4xx_DFP@2.7.0
-                STMicroelectronics STM32L4 Series Device Support, Drivers and Examples
+                https://www.keil.com/pack/Keil.STM32L4xx_DFP.3.1.0.pack
+                Keil::STM32L4xx_DFP@3.1.0
+                STMicroelectronics STM32L4 Series Device Support
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/_NEW_Waist
-  D:/Keil_v5/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include
-  D:/Keil_v5/Packs/Keil/STM32L4xx_DFP/2.7.0/Drivers/CMSIS/Device/ST/STM32L4xx/Include
+  E:/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE@6.1.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:59
 </pre>
 </body>
 </html>

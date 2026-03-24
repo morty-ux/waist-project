@@ -1,7 +1,7 @@
 new_waist\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 new_waist\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-new_waist\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-new_waist\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+new_waist\croutine.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stddef.h
+new_waist\croutine.o: E:\Keil_v5\ARM\ARM5\Bin\..\include\stdint.h
 new_waist\croutine.o: ../Core/Inc/FreeRTOSConfig.h
 new_waist\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 new_waist\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

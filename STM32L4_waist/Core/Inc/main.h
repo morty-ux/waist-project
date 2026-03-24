@@ -59,6 +59,22 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
+#define LF_IN1_Pin GPIO_PIN_6
+#define LF_IN1_GPIO_Port GPIOF
+#define LF_IN2_Pin GPIO_PIN_7
+#define LF_IN2_GPIO_Port GPIOF
+#define RF_IN1_Pin GPIO_PIN_8
+#define RF_IN1_GPIO_Port GPIOF
+#define RF_IN2_Pin GPIO_PIN_9
+#define RF_IN2_GPIO_Port GPIOF
+#define LF_Pin GPIO_PIN_0
+#define LF_GPIO_Port GPIOC
+#define RF_Pin GPIO_PIN_1
+#define RF_GPIO_Port GPIOC
+#define LB_Pin GPIO_PIN_2
+#define LB_GPIO_Port GPIOC
+#define RB_Pin GPIO_PIN_3
+#define RB_GPIO_Port GPIOC
 #define RF_ADC_Pin GPIO_PIN_2
 #define RF_ADC_GPIO_Port GPIOA
 #define RB_ADC_Pin GPIO_PIN_3
@@ -67,10 +83,10 @@ void Error_Handler(void);
 #define LD3_GPIO_Port GPIOB
 #define STLK_RX_Pin GPIO_PIN_8
 #define STLK_RX_GPIO_Port GPIOD
-#define RF_IN1_Pin GPIO_PIN_12
-#define RF_IN1_GPIO_Port GPIOD
-#define RF_IN2_Pin GPIO_PIN_13
-#define RF_IN2_GPIO_Port GPIOD
+#define RF_IN1D12_Pin GPIO_PIN_12
+#define RF_IN1D12_GPIO_Port GPIOD
+#define RF_IN2D13_Pin GPIO_PIN_13
+#define RF_IN2D13_GPIO_Port GPIOD
 #define RB_IN2_Pin GPIO_PIN_14
 #define RB_IN2_GPIO_Port GPIOD
 #define RB_IN1_Pin GPIO_PIN_15

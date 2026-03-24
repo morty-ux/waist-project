@@ -725,11 +725,10 @@ ARM Macro Assembler    Page 12
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=new_waist\startup_stm32l4r5xx.d -onew_waist\startup_stm32l4r
-5xx.o -I../Core/Inc -I.\RTE\_NEW_Waist -ID:\Keil_v5\Packs\ARM\CMSIS\6.1.0\CMSIS
-\Core\Include -ID:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.7.0\Drivers\CMSIS\Device\
-ST\STM32L4xx\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VER
-SION SETA 540" --predefine="STM32L4R5xx SETA 1" --predefine="_RTE_ SETA 1" --li
-st=startup_stm32l4r5xx.lst startup_stm32l4r5xx.s
+5xx.o -I../Core/Inc -I.\RTE\_NEW_Waist -IE:\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\In
+clude --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 542" 
+--predefine="STM32L4R5xx SETA 1" --predefine="_RTE_ SETA 1" --list=startup_stm3
+2l4r5xx.lst startup_stm32l4r5xx.s
 
 
 

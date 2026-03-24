@@ -54,14 +54,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-ActuatorDevice ActuatorRF, ActuatorRB;
-PID_Controller ActuatorRf_Pid, ActuatorRb_Pid;
-volatile uint16_t AdcRec[2] = {0};
+ActuatorDevice ActuatorRF, ActuatorRB, ActuatorLB, ActuatorLF;
+PID_Controller ActuatorRf_Pid, ActuatorRb_Pid, ActuatorLb_Pid, ActuatorLf_Pid;
+volatile uint16_t AdcRec[6] = {0};
 ESP8266_Device esp8266;
 
 
 QueueSetHandle_t g_control_set;
-
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -96,11 +95,15 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
   HAL_ADC_MspInit(&hadc1);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)AdcRec, 2);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)AdcRec, 6);
   Actuator_Init(&ActuatorRF, &htim4, TIM_CHANNEL_3, TIM_CHANNEL_4, 1000);
   Actuator_Init(&ActuatorRB, &htim4, TIM_CHANNEL_1, TIM_CHANNEL_2, 1000);
+  Actuator_Init(&ActuatorLF, &htim5, TIM_CHANNEL_1, TIM_CHANNEL_2, 1000);
+  Actuator_Init(&ActuatorLB, &htim5, TIM_CHANNEL_3, TIM_CHANNEL_4, 1000);
   PID_Init(&ActuatorRf_Pid, 10, 0.5, 0, 0.01, 1000, -1000, 1.0);
   PID_Init(&ActuatorRb_Pid, 10, 0.5, 0, 0.01, 1000, -1000, 1.0);
+  PID_Init(&ActuatorLf_Pid, 10, 0.5, 0, 0.01, 1000, -1000, 1.0);
+  PID_Init(&ActuatorLb_Pid, 10, 0.5, 0, 0.01, 1000, -1000, 1.0);
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -224,6 +227,18 @@ void ControlFunction(void *argument)
     PID_SetTarget(&ActuatorRb_Pid, current_target.RbTarget);
     PID_Compute(&ActuatorRb_Pid, ActuatorRB.current_pos_mm);
     Actuator_Control(&ActuatorRB, ActuatorRb_Pid.output);
+
+    PID_SetTarget(&ActuatorRf_Pid, current_target.RfTarget);
+    PID_Compute(&ActuatorRf_Pid, ActuatorRF.current_pos_mm);
+    Actuator_Control(&ActuatorRF, ActuatorRf_Pid.output);
+
+    PID_SetTarget(&ActuatorLf_Pid, current_target.LfTarget);
+    PID_Compute(&ActuatorLf_Pid, ActuatorLF.current_pos_mm);
+    Actuator_Control(&ActuatorLF, ActuatorLf_Pid.output);
+
+    PID_SetTarget(&ActuatorLb_Pid, current_target.LbTarget);
+    PID_Compute(&ActuatorLb_Pid, ActuatorLB.current_pos_mm);
+    Actuator_Control(&ActuatorLB, ActuatorLb_Pid.output);
 #ifdef STACK_PRINT
     uint32_t ulStackRemaining = uxHighWaterMark * 4;
 		DEBUG_INFO("%d bytes short of overflow.\r\n", ulStackRemaining);
@@ -236,4 +251,3 @@ void ControlFunction(void *argument)
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 /* USER CODE END Application */
-
