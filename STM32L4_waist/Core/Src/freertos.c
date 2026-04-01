@@ -23,7 +23,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "driver_actuator.h"
@@ -56,7 +55,7 @@
 /* USER CODE BEGIN Variables */
 ActuatorDevice ActuatorRF, ActuatorRB, ActuatorLB, ActuatorLF;
 PID_Controller ActuatorRf_Pid, ActuatorRb_Pid, ActuatorLb_Pid, ActuatorLf_Pid;
-volatile uint16_t AdcRec[6] = {0};
+volatile uint16_t AdcRec[4] = {0};
 ESP8266_Device esp8266;
 
 
@@ -66,17 +65,17 @@ QueueSetHandle_t g_control_set;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for pidControlTask */
 osThreadId_t pidControlTaskHandle;
 const osThreadAttr_t pidControlTask_attributes = {
   .name = "pidControlTask",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityRealtime,
 };
-/* 
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
@@ -95,8 +94,8 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
   HAL_ADC_MspInit(&hadc1);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)AdcRec, 6);
-  Actuator_Init(&ActuatorRF, &htim4, TIM_CHANNEL_3, TIM_CHANNEL_4, 1000);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)AdcRec, 4);
+  Actuator_Init(&ActuatorRF, &htim4, TIM_CHANNEL_4, TIM_CHANNEL_3, 1000);
   Actuator_Init(&ActuatorRB, &htim4, TIM_CHANNEL_1, TIM_CHANNEL_2, 1000);
   Actuator_Init(&ActuatorLF, &htim5, TIM_CHANNEL_1, TIM_CHANNEL_2, 1000);
   Actuator_Init(&ActuatorLB, &htim5, TIM_CHANNEL_3, TIM_CHANNEL_4, 1000);
@@ -154,7 +153,7 @@ void StartDefaultTask(void *argument)
 #ifdef STACK_PRINT
 	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL); 
 #endif
-  ESP8266_Init(&esp8266, &huart4);
+  ESP8266_Init(&esp8266, &huart1);
   ESP8266_AP_Config ap_config = {
       .ssid = "EnvMonitor",
       .pwd = "12345678",
@@ -202,7 +201,7 @@ void ControlFunction(void *argument)
   xLastWakeTime = xTaskGetTickCount();
 	ActuatorTarget current_target = {50.0,50.0,50.0,50.0};
 	QueueSetMemberHandle_t xQueueHandle;
-	// 
+	//		
   /* Infinite loop */
   for (;;)
   {
@@ -212,33 +211,37 @@ void ControlFunction(void *argument)
 		if (xQueueHandle == get_shellQueueHandle())
 		{
 			xQueueReceive(get_shellQueueHandle(), &current_target, 0);
-			DEBUG_INFO("From shell Target Received: %.2f\n", current_target.RbTarget);
+			DEBUG_INFO("From shell Target Received: %.2f,%.2f,%.2f,%.2f\n",
+							current_target.RbTarget,
+							current_target.RfTarget,
+							current_target.LfTarget,
+							current_target.LbTarget);
 		}	else if(xQueueHandle == get_FrameQueueHandle()){
 			xQueueReceive(get_FrameQueueHandle(), &current_target, 0);
 			DEBUG_INFO("From Frame Target Received: %.2f,%.2f,%.2f,%.2f\n", current_target.RbTarget,
-																																			current_target.RfTarget,
-																																			current_target.LfTarget,
-																																			current_target.LbTarget);
+																			current_target.RfTarget,
+																			current_target.LfTarget,
+																			current_target.LbTarget);
 		}		
 
 //		if (xQueueReceive(get_shellQueueHandle(), &current_target, 0) == pdPASS) {
 //			DEBUG_INFO("Target Received: %.2f\n", current_target.RbTarget);
 //		}
-    PID_SetTarget(&ActuatorRb_Pid, current_target.RbTarget);
-    PID_Compute(&ActuatorRb_Pid, ActuatorRB.current_pos_mm);
-    Actuator_Control(&ActuatorRB, ActuatorRb_Pid.output);
+      PID_SetTarget(&ActuatorRb_Pid, current_target.RbTarget);
+      PID_Compute(&ActuatorRb_Pid, ActuatorRB.current_pos_mm);
+      Actuator_Control(&ActuatorRB, ActuatorRb_Pid.output);
+		
+      PID_SetTarget(&ActuatorRf_Pid, current_target.RfTarget);
+      PID_Compute(&ActuatorRf_Pid, ActuatorRF.current_pos_mm);
+      Actuator_Control(&ActuatorRF, ActuatorRf_Pid.output);
 
-    PID_SetTarget(&ActuatorRf_Pid, current_target.RfTarget);
-    PID_Compute(&ActuatorRf_Pid, ActuatorRF.current_pos_mm);
-    Actuator_Control(&ActuatorRF, ActuatorRf_Pid.output);
+      PID_SetTarget(&ActuatorLf_Pid, current_target.LfTarget);
+      PID_Compute(&ActuatorLf_Pid, ActuatorLF.current_pos_mm);
+      Actuator_Control(&ActuatorLF, ActuatorLf_Pid.output);
 
-    PID_SetTarget(&ActuatorLf_Pid, current_target.LfTarget);
-    PID_Compute(&ActuatorLf_Pid, ActuatorLF.current_pos_mm);
-    Actuator_Control(&ActuatorLF, ActuatorLf_Pid.output);
-
-    PID_SetTarget(&ActuatorLb_Pid, current_target.LbTarget);
-    PID_Compute(&ActuatorLb_Pid, ActuatorLB.current_pos_mm);
-    Actuator_Control(&ActuatorLB, ActuatorLb_Pid.output);
+      PID_SetTarget(&ActuatorLb_Pid, current_target.LbTarget);
+      PID_Compute(&ActuatorLb_Pid, ActuatorLB.current_pos_mm);
+      Actuator_Control(&ActuatorLB, ActuatorLb_Pid.output);
 #ifdef STACK_PRINT
     uint32_t ulStackRemaining = uxHighWaterMark * 4;
 		DEBUG_INFO("%d bytes short of overflow.\r\n", ulStackRemaining);
@@ -251,3 +254,4 @@ void ControlFunction(void *argument)
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 /* USER CODE END Application */
+

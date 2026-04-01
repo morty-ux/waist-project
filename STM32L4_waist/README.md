@@ -9,7 +9,7 @@
 | RB（右后） | TIM4 CH1/CH2 (PD15/PD14) | ADC1 IN8 (PA3) | ✅ 闭环控制 |
 | RF（右前） | TIM4 CH3/CH4 (PD12/PD13) | ADC1 IN7 (PA2) | ✅ 闭环控制 |
 | LF（左前） | TIM5 CH1/CH2 (PF6/PF7) | ADC1 IN2 (PC1) | ✅ 闭环控制 |
-| LB（左后） | TIM5 CH3/CH4 (PF8/PF9) | ADC1 IN1 (PC0) | ✅ 闭环控制 |
+| LB（左后） | TIM5 CH3/CH4 (PF8/PF9) | ADC1 IN3 (PC2) | ✅ 闭环控制 |
 
 ---
 
@@ -28,14 +28,14 @@
 |------|------|-----|
 | RF | IN7 | PA2 |
 | RB | IN8 | PA3 |
-| LB | IN1 | PC0 |
+| LB | IN3 | PC2 |
 | LF | IN2 | PC1 |
 
 ### 串口
 | 功能 | 外设 | IO | 波特率 |
 |------|------|-----|--------|
 | Shell/Log | LPUART1 | PG7/PG8 | 209700 |
-| ESP8266 | UART4 | PA0/PA1 | 115200 |
+| ESP8266 | USART1 | PG9/PG10 | 115200 |
 
 ---
 
@@ -105,7 +105,6 @@ LB <float>   // 设置LB目标值
 
 ## 6. 待完成
 
-- [ ] ADC 4通道配置（需在CubeMX调整）
 - [ ] 上传真实状态（非测试值）
 - [ ] 异常保护/急停
 

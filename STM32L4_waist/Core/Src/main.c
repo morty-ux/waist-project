@@ -99,6 +99,7 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   MX_UART4_Init();
   MX_TIM5_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	HAL_UARTEx_ReceiveToIdle_DMA(&hlpuart1, shell_buff, sizeof(shell_buff));
   /* USER CODE END 2 */

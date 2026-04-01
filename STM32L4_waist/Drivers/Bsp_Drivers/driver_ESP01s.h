@@ -10,8 +10,8 @@
 #include "task.h"
 #include "driver_log.h"
 
-#define RX_BUF_SIZE 256 
-#define ESP8266_DEBUG
+#define RX_BUF_SIZE 256
+//#define ESP8266_DEBUG
 
 // 连接状态
 typedef enum {
