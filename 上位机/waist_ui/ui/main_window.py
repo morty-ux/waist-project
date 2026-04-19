@@ -25,8 +25,8 @@ class MainWindow(FluentWindow):
         self.__initCommunication()
 
     def __initWindow(self):
-        self.resize(1200, 750)
-        self.setMinimumSize(1100, 700)
+        self.resize(1400, 900)
+        self.setMinimumSize(1300, 800)
         self.setWindowTitle('康复医疗仪表盘')
 
     def __initNavigation(self):
@@ -116,6 +116,7 @@ class MainWindow(FluentWindow):
         self.logInterface.addLog('DEBUG', f"[RX] {hex_str}")
 
     def __onRxDataChanged(self, data):
+        self.dataMonitorInterface.updateSensorData(data)
         self.logInterface.addLog('DEBUG', f"[RX] {data}")
 
     def __onLogMessage(self, level, message):
@@ -135,6 +136,7 @@ class MainWindow(FluentWindow):
         )
 
     def __onForceChanged(self, rb, rf, lb, lf):
+        self.logInterface.addLog('DEBUG', f"发送电机: LF={lf}, LB={lb}, RF={rf}, RB={rb}")
         self.tcp_client.send_motor_cmd(rb, rf, lb, lf)
 
     def __onReset(self):

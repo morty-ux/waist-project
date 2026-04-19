@@ -1,7 +1,7 @@
 # coding: utf-8
 """
 数据监测界面
-包含：电机状态显示（人体图+卡片）+ 连接状态 + 力控调节 + 传感器信号槽
+包含：电机状态显示（人体图+卡片）+ 连接状态 + 训练强度 + 实时反馈
 """
 
 from pathlib import Path
@@ -12,7 +12,8 @@ from qfluentwidgets import (
     ScrollArea, SubtitleLabel, BodyLabel, TitleLabel,
     CardWidget, SimpleCardWidget,
     ElevatedCardWidget, ProgressBar, CaptionLabel, ImageLabel,
-    PrimaryPushButton, PushButton, Slider, DoubleSpinBox
+    PrimaryPushButton, PushButton, Slider, DoubleSpinBox,
+    SwitchButton
 )
 
 
@@ -101,6 +102,83 @@ class SensorSlotCard(SimpleCardWidget):
         self.progressBar.setValue(int(min(value, 100)))
 
 
+class BatchControlCard(CardWidget):
+    """批量力控参数调节卡片 - 先调整后发送"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.values = {'LF': 0, 'LB': 0, 'RF': 0, 'RB': 0}
+        self.sliders = {}
+        self._batch_send_callback = None
+        self.__initUI()
+
+    def __initUI(self):
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(15)
+
+        title = SubtitleLabel('批量调节')
+        layout.addWidget(title)
+
+        channels = ['LF', 'LB', 'RF', 'RB']
+        for channel in channels:
+            row = QWidget()
+            row_layout = QHBoxLayout(row)
+            row_layout.setContentsMargins(0, 0, 0, 0)
+            row_layout.setSpacing(10)
+
+            label = BodyLabel(channel)
+            label.setFixedWidth(30)
+
+            slider = Slider(Qt.Horizontal)
+            slider.setRange(0, 100)
+            slider.setValue(0)
+            slider.valueChanged.connect(lambda v, ch=channel: self._onSliderChanged(ch, v))
+
+            self.sliders[channel] = slider
+
+            row_layout.addWidget(label)
+            row_layout.addWidget(slider)
+
+            layout.addWidget(row)
+
+        btn_layout = QHBoxLayout()
+        btn_layout.addStretch()
+
+        self.send_btn = PrimaryPushButton('批量发送')
+        self.send_btn.setFixedWidth(120)
+        self.send_btn.clicked.connect(self._onBatchSend)
+
+        btn_layout.addWidget(self.send_btn)
+        layout.addLayout(btn_layout)
+
+    def _onSliderChanged(self, channel, value):
+        self.values[channel] = value
+
+    def _onBatchSend(self):
+        if self._batch_send_callback:
+            self._batch_send_callback(
+                self.values.get('RB', 0),
+                self.values.get('RF', 0),
+                self.values.get('LB', 0),
+                self.values.get('LF', 0)
+            )
+
+    def setBatchSendCallback(self, callback):
+        self._batch_send_callback = callback
+
+    def get_values(self) -> dict:
+        return self.values.copy()
+
+    def set_values(self, values: dict):
+        for ch, v in values.items():
+            if ch in self.sliders:
+                self.sliders[ch].blockSignals(True)
+                self.sliders[ch].setValue(int(v))
+                self.sliders[ch].blockSignals(False)
+                self.values[ch] = v
+
+
 class DataMonitorInterface(ScrollArea):
     """数据监测界面"""
 
@@ -113,14 +191,11 @@ class DataMonitorInterface(ScrollArea):
         self.statusCards = {}
         self.sensorSlots = {}
         self.slider_spin_pairs = {}
-        
+        self._is_realtime_mode = True
+
         self._send_timer = QTimer(self)
         self._send_timer.setSingleShot(True)
         self._send_timer.timeout.connect(self._doSend)
-        
-        self._stop_timer = QTimer(self)
-        self._stop_timer.setSingleShot(True)
-        self._stop_timer.timeout.connect(self._doSend)
 
         self.__initWidget()
         self.__initLayout()
@@ -141,13 +216,13 @@ class DataMonitorInterface(ScrollArea):
         left_widget = self.__createLeftWidget()
         right_widget = self.__createRightWidget()
 
-        main_layout.addWidget(left_widget, 6)
-        main_layout.addWidget(right_widget, 4)
+        main_layout.addWidget(left_widget, 7)
+        main_layout.addWidget(right_widget, 3)
 
         self.vBoxLayout.addLayout(main_layout)
 
     def __createLeftWidget(self):
-        """左侧：人体图+电机状态卡片（4个卡片在图片右侧，2x2网格）"""
+        """左侧：人体图+电机状态卡片（4个卡片分布在人体图四周）"""
         card = ElevatedCardWidget()
         layout = QVBoxLayout(card)
         layout.setContentsMargins(20, 10, 20, 20)
@@ -160,34 +235,37 @@ class DataMonitorInterface(ScrollArea):
         human_container = QWidget()
         human_layout = QGridLayout(human_container)
         human_layout.setContentsMargins(0, 0, 0, 0)
-        human_layout.setSpacing(10)
+        human_layout.setSpacing(15)
 
         image_path = Path(__file__).parent.parent / 'resource' / 'body.png'
         human_label = ImageLabel(str(image_path))
-        human_label.setFixedSize(280, 450)
+        human_label.setFixedSize(300, 480)
         human_label.setBorderRadius(8, 8, 8, 8)
-        human_label.scaledToHeight(450)
 
-        # 人体图占左侧
-        human_layout.addWidget(human_label, 0, 0, 2, 1, Qt.AlignLeft | Qt.AlignVCenter)
-
-        # 4个卡片在右侧，2x2网格排列
         self.statusCards['LF'] = StatusCard('左前 LF')
         self.statusCards['RF'] = StatusCard('右前 RF')
         self.statusCards['LB'] = StatusCard('左后 LB')
         self.statusCards['RB'] = StatusCard('右后 RB')
 
-        human_layout.addWidget(self.statusCards['LF'], 0, 1)
-        human_layout.addWidget(self.statusCards['RF'], 0, 2)
-        human_layout.addWidget(self.statusCards['LB'], 1, 1)
-        human_layout.addWidget(self.statusCards['RB'], 1, 2)
+        human_layout.addWidget(self.statusCards['LF'], 0, 0, Qt.AlignRight | Qt.AlignVCenter)
+        human_layout.addWidget(self.statusCards['RF'], 0, 2, Qt.AlignLeft | Qt.AlignVCenter)
+        human_layout.addWidget(human_label, 0, 1, 3, 1, Qt.AlignCenter)
+        human_layout.addWidget(self.statusCards['LB'], 2, 0, Qt.AlignRight | Qt.AlignVCenter)
+        human_layout.addWidget(self.statusCards['RB'], 2, 2, Qt.AlignLeft | Qt.AlignVCenter)
+
+        human_layout.setColumnStretch(0, 1)
+        human_layout.setColumnStretch(1, 4)
+        human_layout.setColumnStretch(2, 1)
+        human_layout.setRowStretch(0, 1)
+        human_layout.setRowStretch(1, 3)
+        human_layout.setRowStretch(2, 1)
 
         layout.addWidget(human_container)
 
         return card
 
     def __createRightWidget(self):
-        """右侧：连接状态 + 力控调节 + 传感器信号槽"""
+        """右侧：连接状态 + 训练强度 + 实时反馈"""
         widget = QWidget()
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -195,11 +273,11 @@ class DataMonitorInterface(ScrollArea):
 
         connection_card = self.__createConnectionCard()
         force_control_card = self.__createForceControlCard()
-        sensor_slots_card = self.__createSensorSlotsCard()
+        feedback_card = self.__createFeedbackCard()
 
         layout.addWidget(connection_card)
         layout.addWidget(force_control_card)
-        layout.addWidget(sensor_slots_card)
+        layout.addWidget(feedback_card)
         layout.addStretch()
 
         return widget
@@ -225,18 +303,39 @@ class DataMonitorInterface(ScrollArea):
         return card
 
     def __createForceControlCard(self):
-        """力控参数调节卡片"""
+        """训练强度卡片（支持即时/统一模式切换）"""
         card = CardWidget()
         layout = QVBoxLayout(card)
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
 
         title_layout = QHBoxLayout()
-        title = SubtitleLabel('力控参数调节')
-        title_layout.addWidget(title)
-        title_layout.addStretch()
+        title_layout.setSpacing(10)
 
-        self.reset_btn = PushButton('复位')
+        title = SubtitleLabel('训练强度')
+        title_layout.addWidget(title)
+
+        mode_layout = QHBoxLayout()
+        mode_layout.setSpacing(8)
+
+        self.mode_switch = SwitchButton()
+        self.mode_switch.setOnText('即时')
+        self.mode_switch.setOffText('统一')
+        self.mode_switch.setChecked(True)
+        self.mode_switch.checkedChanged.connect(self._onModeChanged)
+
+        mode_layout.addWidget(self.mode_switch)
+        mode_layout.addStretch()
+
+        title_layout.addLayout(mode_layout)
+
+        self.sendAllBtn = PrimaryPushButton('应用')
+        self.sendAllBtn.setFixedWidth(70)
+        self.sendAllBtn.hide()
+        self.sendAllBtn.clicked.connect(self._onSendAllClicked)
+        title_layout.addWidget(self.sendAllBtn)
+
+        self.reset_btn = PushButton('恢复')
         self.reset_btn.clicked.connect(self.__onReset)
         self.reset_btn.setEnabled(False)
         self.reset_btn.setFixedWidth(60)
@@ -281,14 +380,14 @@ class DataMonitorInterface(ScrollArea):
 
         return card
 
-    def __createSensorSlotsCard(self):
-        """传感器信号槽卡片"""
+    def __createFeedbackCard(self):
+        """实时反馈卡片"""
         card = CardWidget()
         layout = QVBoxLayout(card)
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
 
-        title = SubtitleLabel('传感器信号槽')
+        title = SubtitleLabel('实时反馈')
         layout.addWidget(title)
 
         slots_layout = QHBoxLayout()
@@ -308,8 +407,12 @@ class DataMonitorInterface(ScrollArea):
 
         return card
 
+    def __createBatchControlCard(self):
+        """批量调节卡片"""
+        return BatchControlCard()
+
     def __createQuickActionsCard(self):
-        """快捷指令卡片"""
+        """快捷操作卡片"""
         card = SimpleCardWidget()
         layout = QVBoxLayout(card)
         layout.setContentsMargins(20, 20, 20, 20)
@@ -368,24 +471,39 @@ class DataMonitorInterface(ScrollArea):
         spin_box.setValue(value)
         spin_box.blockSignals(False)
         self.statusCards[channel].updateValue(value)
-        self._triggerSend(channel)
+        if self._is_realtime_mode:
+            self._triggerSend(channel)
 
     def __onSpinBoxChanged(self, value, slider, channel):
         slider.blockSignals(True)
         slider.setValue(int(value))
         slider.blockSignals(False)
         self.statusCards[channel].updateValue(value)
-        self._triggerSend(channel)
+        if self._is_realtime_mode:
+            self._triggerSend(channel)
+
+    def _onModeChanged(self, is_on):
+        self._is_realtime_mode = is_on
+        if is_on:
+            self.sendAllBtn.hide()
+        else:
+            self.sendAllBtn.show()
+
+    def _onSendAllClicked(self):
+        if hasattr(self, '_on_force_changed'):
+            current_values = self.get_motor_values()
+            self._on_force_changed(
+                current_values.get('RB', 0),
+                current_values.get('RF', 0),
+                current_values.get('LB', 0),
+                current_values.get('LF', 0)
+            )
 
     def _triggerSend(self, channel):
         if not hasattr(self, '_on_force_changed'):
             return
-        if not self._send_timer.isActive():
-            self._doSend()
         self._send_timer.stop()
         self._send_timer.start(100)
-        self._stop_timer.stop()
-        self._stop_timer.start(150)
 
     def _doSend(self):
         if hasattr(self, '_on_force_changed'):

@@ -167,6 +167,7 @@ class TCPClient(QObject):
         格式: [A5] [CC] [10] [RB] [RF] [LB] [LF] [CS] [5A]
         """
         if not self._is_connected:
+            print(f"[TCP] Not connected, cannot send motor cmd")
             return
 
         frame = bytearray()
@@ -175,10 +176,19 @@ class TCPClient(QObject):
         frame.append(0xCC)
         frame.append(0x10)
 
-        frame.extend(struct.pack('<f', rb))
-        frame.extend(struct.pack('<f', rf))
-        frame.extend(struct.pack('<f', lb))
-        frame.extend(struct.pack('<f', lf))
+        data_rb = struct.pack('<f', rb)
+        data_rf = struct.pack('<f', rf)
+        data_lb = struct.pack('<f', lb)
+        data_lf = struct.pack('<f', lf)
+
+        print(f"[TCP] Packing: RB={rb}({data_rb.hex()}), RF={rf}({data_rf.hex()}), LB={lb}({data_lb.hex()}), LF={lf}({data_lf.hex()})")
+
+        frame.extend(data_rb)
+        frame.extend(data_rf)
+        frame.extend(data_lb)
+        frame.extend(data_lf)
+
+        print(f"[TCP] Frame: {frame.hex()}")
 
         checksum = 0
         checksum += frame[0]
