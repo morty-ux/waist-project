@@ -5,5 +5,6 @@
 """
 
 from .tcp_client import TCPClient
+from .mqtt_client import MQTTClient
 
-__all__ = ['TCPClient']
+__all__ = ['TCPClient', 'MQTTClient']
