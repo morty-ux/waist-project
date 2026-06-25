@@ -428,7 +428,8 @@ class DataMonitorInterface(ScrollArea):
             )
 
         peak_abs = max(32, abs(value))
-        self._semg_peak_abs = max(peak_abs, int(self._semg_peak_abs * 0.992))
+        if peak_abs > self._semg_peak_abs:
+            self._semg_peak_abs = peak_abs
         axis_limit = int(self._semg_peak_abs * 1.2)
         self._semg_axisY.setRange(-axis_limit, axis_limit)
         self._semg_value_label.setText(f'当前: {value}')
