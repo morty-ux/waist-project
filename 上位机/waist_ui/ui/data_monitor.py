@@ -20,6 +20,25 @@ from qfluentwidgets import (
     SwitchButton
 )
 
+# UI-only channel mapping. Keep motor values and packet order unchanged.
+CHANNEL_DISPLAY_NAMES = {
+    'LF': 'RB',
+    'LB': 'RF',
+    'RF': 'LB',
+    'RB': 'LF',
+}
+CHANNEL_DISPLAY_ORDER = ['LF', 'LB', 'RF', 'RB']
+CHANNEL_UI_ORDER = [
+    next(internal for internal, display in CHANNEL_DISPLAY_NAMES.items() if display == display_channel)
+    for display_channel in CHANNEL_DISPLAY_ORDER
+]
+STATUS_CARD_TITLES = {
+    'RB': '左前 LF',
+    'RF': '左后 LB',
+    'LB': '右前 RF',
+    'LF': '右后 RB',
+}
+
 
 class StatusCard(SimpleCardWidget):
     """电机状态卡片 - 紧凑版"""
@@ -80,14 +99,14 @@ class BatchControlCard(CardWidget):
         title = SubtitleLabel('批量调节')
         layout.addWidget(title)
 
-        channels = ['LF', 'LB', 'RF', 'RB']
+        channels = CHANNEL_UI_ORDER
         for channel in channels:
             row = QWidget()
             row_layout = QHBoxLayout(row)
             row_layout.setContentsMargins(0, 0, 0, 0)
             row_layout.setSpacing(10)
 
-            label = BodyLabel(channel)
+            label = BodyLabel(CHANNEL_DISPLAY_NAMES[channel])
             label.setFixedWidth(30)
 
             slider = Slider(Qt.Horizontal)
@@ -212,12 +231,8 @@ class DataMonitorInterface(ScrollArea):
         cards_row = QHBoxLayout()
         cards_row.setSpacing(8)
 
-        self.statusCards['LF'] = StatusCard('左前 LF')
-        self.statusCards['RF'] = StatusCard('右前 RF')
-        self.statusCards['LB'] = StatusCard('左后 LB')
-        self.statusCards['RB'] = StatusCard('右后 RB')
-
-        for key in ['LF', 'RF', 'LB', 'RB']:
+        for key in CHANNEL_UI_ORDER:
+            self.statusCards[key] = StatusCard(STATUS_CARD_TITLES[key])
             cards_row.addWidget(self.statusCards[key])
 
         layout.addLayout(cards_row)
@@ -303,7 +318,7 @@ class DataMonitorInterface(ScrollArea):
 
         layout.addLayout(title_layout)
 
-        channels = ['LF', 'LB', 'RF', 'RB']
+        channels = CHANNEL_UI_ORDER
 
         for channel in channels:
             row = QWidget()
@@ -311,7 +326,7 @@ class DataMonitorInterface(ScrollArea):
             row_layout.setContentsMargins(0, 0, 0, 0)
             row_layout.setSpacing(10)
 
-            label = BodyLabel(channel)
+            label = BodyLabel(CHANNEL_DISPLAY_NAMES[channel])
             label.setFixedWidth(30)
 
             slider = Slider(Qt.Horizontal)

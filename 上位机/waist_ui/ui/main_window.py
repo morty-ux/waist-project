@@ -228,7 +228,7 @@ class MainWindow(FluentWindow):
         )
 
     def __onForceChanged(self, rb, rf, lb, lf):
-        self.logInterface.addLog('DEBUG', f'发送电机: LF={lf}, LB={lb}, RF={rf}, RB={rb}')
+        self.logInterface.addLog('DEBUG', f'发送电机: LF={rb}, LB={rf}, RF={lb}, RB={lf}')
         self.comm_client.send_motor_cmd(rb, rf, lb, lf)
 
     def __onReset(self):
