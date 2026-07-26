@@ -132,7 +132,7 @@ class AngleInputCard(SimpleCardWidget):
 
         motion_index = self._motion_combo.currentIndex()
         if motion_index == 0:
-            return (0.0, 0.0, -value)
+            return (0.0, 0.0, value)
         if motion_index == 1:
             return (0.0, -value, 0.0)
         return (value, 0.0, 0.0)
@@ -424,7 +424,7 @@ class PresetMotionInterface(ScrollArea):
         if self._convert_callback:
             motor_values = self._convert_callback(alpha, beta, gamma)
         else:
-            motor_values = {'LF': 0.0, 'LB': 0.0, 'RB': 0.0, 'RF': 0.0}
+            motor_values = {'RB': 0.0, 'RF': 0.0, 'LB': 0.0, 'LF': 0.0}
 
         if self._send_motor_callback:
             self._send_motor_callback(
